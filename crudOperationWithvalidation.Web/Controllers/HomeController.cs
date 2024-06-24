@@ -7,8 +7,8 @@ namespace crudOperationWithvalidation.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private SchoolContext schoolContext;
 
+        private SchoolContext schoolContext;
         public HomeController(SchoolContext sc)
         {
             schoolContext = sc;
@@ -19,7 +19,6 @@ namespace crudOperationWithvalidation.Web.Controllers
             return View();
         }
 
-        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -38,6 +37,9 @@ namespace crudOperationWithvalidation.Web.Controllers
                 return View();
         }
 
-    
+
     }
+
+    
+    
 }
