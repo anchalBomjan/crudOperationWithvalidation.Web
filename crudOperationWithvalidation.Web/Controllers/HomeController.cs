@@ -1,3 +1,4 @@
+using crudOperationWithvalidation.Web.Data;
 using crudOperationWithvalidation.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -6,11 +7,11 @@ namespace crudOperationWithvalidation.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private SchoolContext schoolContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(SchoolContext sc)
         {
-            _logger = logger;
+            schoolContext = sc;
         }
 
         public IActionResult Index()
@@ -18,15 +19,25 @@ namespace crudOperationWithvalidation.Web.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public IActionResult Create()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpPost]
+        public IActionResult Create(Teacher teacher)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if (ModelState.IsValid)
+            {
+                schoolContext.Teachers.Add(teacher);
+                schoolContext.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+                return View();
         }
+
+    
     }
 }
